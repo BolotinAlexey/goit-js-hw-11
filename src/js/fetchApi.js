@@ -12,10 +12,19 @@ export default class Api {
     };
     this.arrayImages = [];
   }
+  set qSet(q) {
+    this.require.q = q;
+  }
   async fetchApi() {
     try {
-      const resultFetch = await axios.get(URL_BASE, this.require);
-      console.log(resultFetch);
+      const urlToFetch =
+        URL_BASE +
+        Object.keys(this.require)
+          .map(key => `&${key}=${this.require[key]}`)
+          .join('');
+      console.log(urlToFetch);
+      const resultFetch = await axios.get(urlToFetch);
+      return resultFetch;
     } catch (error) {
       console.log('error', error);
     }
