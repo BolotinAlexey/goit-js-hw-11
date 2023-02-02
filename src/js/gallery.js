@@ -4,8 +4,7 @@ export default function createGallery(arr) {
 
 function createCard({ webformatURL, tags, likes, views, comments, downloads }) {
   return `
-   <a href="" class="gallery__item">
-    <div class="photo-card">
+   <a href="" class="photo-card">
   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
@@ -21,7 +20,6 @@ function createCard({ webformatURL, tags, likes, views, comments, downloads }) {
       <b>Downloads: ${downloads}</b>
     </p>
   </div>
-</div>
 </a>
     `;
 }
