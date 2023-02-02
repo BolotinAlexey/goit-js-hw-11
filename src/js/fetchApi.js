@@ -1,17 +1,27 @@
-import Api from './fetchApi';
-import createGallery from './gallery';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-/* options lightbox*/
-const options = {};
-const refs = {
-  gallery: document.querySelector('.gallery'),
-};
-
-const api = new Api();
-// api.fetchApi('red');
-
-const { total, totalHits, hits } = {
+const KEY = '33299161-c9719a65dfe469cb85eb97047';
+const URL_BASE = `https://pixabay.com/api/?key=${KEY}`;
+const axios = require('axios').default;
+export default class Api {
+  constructor(q = '') {
+    // this.q = q;
+    this.require = {
+      q,
+      image_type: 'photo',
+      orientation: 'horizontal',
+      safesearch: 'true',
+    };
+    this.arrayImages = [];
+  }
+  async fetchApi() {
+    try {
+      const resultFetch = await axios.get(URL_BASE, this.require);
+      console.log(resultFetch);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
+}
+const obj = {
   total: 1684202,
   totalHits: 500,
   hits: [
@@ -596,5 +606,3 @@ const { total, totalHits, hits } = {
     },
   ],
 };
-refs.gallery.insertAdjacentHTML('beforeend', createGallery(hits));
-const lightbox = new SimpleLightbox('.gallery a', options);

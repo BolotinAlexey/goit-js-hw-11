@@ -22,5 +22,9 @@
     "axios": "^1.3.0",
     "notiflix": "^3.2.6",
     "simplelightbox": "^2.12.1"
+  },
+  "devDependencies": {
+    "buffer": "^5.7.1",
+    "parcel": "^2.8.3"
   }
 }
