@@ -23,11 +23,11 @@ export default class Api {
   set pageSet(page) {
     this.require.page = page;
   }
-  setIncrPage() {
-    this.require.page++;
-  }
   get pageGet() {
     return this.require.page;
+  }
+  setIncrPage() {
+    this.require.page++;
   }
   async fetchApi() {
     try {

@@ -32,6 +32,9 @@ async function runScript(word, page) {
     }
     refs.gallery.insertAdjacentHTML('beforeend', createGallery(hits));
     lightbox.refresh();
+    if (api.pageGet === 1)
+      Notiflix.Notify.success(` Hooray! We found ${totalHits} images.`);
+
     if (api.pageGet * 40 > totalHits) {
       refs.button.classList.add('invisible');
       Notiflix.Notify.info(
