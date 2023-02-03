@@ -10,6 +10,7 @@ const lightbox = new SimpleLightbox('.gallery a');
 const api = new Api();
 refs.form.addEventListener('submit', onSubmit);
 
+// Main script
 async function runScript(word, page) {
   api.q = word;
   api.page = page;
@@ -45,6 +46,7 @@ async function runScript(word, page) {
   }
 }
 
+// "submit" event handler
 function onSubmit(e) {
   e.preventDefault();
   const inputWord = e.target.elements.searchQuery.value.trim();
@@ -53,6 +55,7 @@ function onSubmit(e) {
   runScript(inputWord, 1);
 }
 
+// Leads the contents of the gallery to the initial state
 function clear() {
   refs.input.value = '';
   api.q = '';
@@ -60,20 +63,22 @@ function clear() {
   resetGallery();
 }
 
+// Cleans the contents of the gallery
 function resetGallery() {
   refs.gallery.innerHTML = '';
 }
 
+// Increments the current page by one and restarts the gallery rendering script
 function nextPage() {
   api.incrementPage();
   refs.button.removeEventListener('click', nextPage);
   runScript(api.q, api.page);
 }
 
+// Shifts the gallery by 2 cards up
 function shiftGallery() {
   const { height: cardHeight } =
     refs.gallery.firstElementChild.getBoundingClientRect();
-
   window.scrollBy({
     top: cardHeight * 2,
     behavior: 'smooth',
