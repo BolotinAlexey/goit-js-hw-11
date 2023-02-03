@@ -3,8 +3,9 @@ import Api from './fetchApi';
 import createGallery from './gallery';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import refs from './refs';
+import getRefs from './getRefs';
 
+const refs = getRefs();
 const lightbox = new SimpleLightbox('.gallery a');
 const api = new Api();
 refs.form.addEventListener('submit', onSubmit);
@@ -25,9 +26,10 @@ async function runScript(word, page) {
     }
     refs.gallery.insertAdjacentHTML('beforeend', createGallery(hits));
     lightbox.refresh();
-    shiftGallery();
+
     if (api.page === 1)
       Notiflix.Notify.success(` Hooray! We found ${totalHits} images.`);
+    else shiftGallery();
 
     if (api.page * 40 > totalHits) {
       refs.button.classList.add('invisible');
