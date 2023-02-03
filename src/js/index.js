@@ -3,22 +3,15 @@ import Api from './fetchApi';
 import createGallery from './gallery';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import refs from './refs';
 
-/* options lightbox*/
-const options = {};
-const refs = {
-  gallery: document.querySelector('.gallery'),
-  form: document.querySelector('#search-form'),
-  input: document.querySelector('[name="searchQuery"]'),
-  button: document.querySelector('.load-more'),
-};
-const lightbox = new SimpleLightbox('.gallery a', options);
+const lightbox = new SimpleLightbox('.gallery a');
 const api = new Api();
 refs.form.addEventListener('submit', onSubmit);
 
 async function runScript(word, page) {
-  api.qSet = word;
-  api.pageSet = page;
+  api.q = word;
+  api.page = page;
   try {
     const { total, totalHits, hits } = await api
       .fetchApi()
@@ -32,10 +25,11 @@ async function runScript(word, page) {
     }
     refs.gallery.insertAdjacentHTML('beforeend', createGallery(hits));
     lightbox.refresh();
-    if (api.pageGet === 1)
+    shiftGallery();
+    if (api.page === 1)
       Notiflix.Notify.success(` Hooray! We found ${totalHits} images.`);
 
-    if (api.pageGet * 40 > totalHits) {
+    if (api.page * 40 > totalHits) {
       refs.button.classList.add('invisible');
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
@@ -44,7 +38,9 @@ async function runScript(word, page) {
     }
     refs.button.classList.remove('invisible');
     refs.button.addEventListener('click', nextPage);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function onSubmit(e) {
@@ -57,7 +53,7 @@ function onSubmit(e) {
 
 function clear() {
   refs.input.value = '';
-  api.qSet = '';
+  api.q = '';
   refs.button.classList.add('invisible');
   resetGallery();
 }
@@ -66,8 +62,18 @@ function resetGallery() {
   refs.gallery.innerHTML = '';
 }
 
-function nextPage(e) {
-  api.setIncrPage();
+function nextPage() {
+  api.incrementPage();
   refs.button.removeEventListener('click', nextPage);
-  runScript(api.qGet, api.pageGet);
+  runScript(api.q, api.page);
+}
+
+function shiftGallery() {
+  const { height: cardHeight } =
+    refs.gallery.firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }

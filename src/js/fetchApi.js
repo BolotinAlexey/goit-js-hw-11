@@ -14,19 +14,19 @@ export default class Api {
     };
     this.arrayImages = [];
   }
-  set qSet(q) {
+  set q(q) {
     this.require.q = q;
   }
-  get qGet() {
+  get q() {
     return this.require.q;
   }
-  set pageSet(page) {
+  set page(page) {
     this.require.page = page;
   }
-  get pageGet() {
+  get page() {
     return this.require.page;
   }
-  setIncrPage() {
+  incrementPage() {
     this.require.page++;
   }
   async fetchApi() {
