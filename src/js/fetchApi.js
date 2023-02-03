@@ -9,11 +9,25 @@ export default class Api {
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: 'true',
+      per_page: 40,
+      page: 1,
     };
     this.arrayImages = [];
   }
   set qSet(q) {
     this.require.q = q;
+  }
+  get qGet() {
+    return this.require.q;
+  }
+  set pageSet(page) {
+    this.require.page = page;
+  }
+  setIncrPage() {
+    this.require.page++;
+  }
+  get pageGet() {
+    return this.require.page;
   }
   async fetchApi() {
     try {
@@ -22,7 +36,6 @@ export default class Api {
         Object.keys(this.require)
           .map(key => `&${key}=${this.require[key]}`)
           .join('');
-      console.log(urlToFetch);
       const resultFetch = await axios.get(urlToFetch);
       return resultFetch;
     } catch (error) {

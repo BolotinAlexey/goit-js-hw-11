@@ -18,6 +18,10 @@ body {
   margin: 0;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -43,4 +47,21 @@ p {
   z-index: 1;
 }
 .search-form input {
+}
+
+/* .section-load-more {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px 20px;
+} */
+.load-more {
+  width: 130px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  margin: 70px auto 20px;
+  background-color: blue;
+  color: white;
+  display: block;
+  cursor: pointer;
 }
